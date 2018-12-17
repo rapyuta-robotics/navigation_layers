@@ -420,30 +420,30 @@ void RangeSensorLayer::updateCosts(costmap_2d::Costmap2D &master_grid,
   unsigned char clear = to_cost(clear_threshold_),
                 mark = to_cost(mark_threshold_);
 
-  for (int j = min_j; j < max_j; j++) {
+  for (int j = min_j; j < max_j; ++j) {
     unsigned int it = j * span + min_i;
-    for (int i = min_i; i < max_i; i++) {
+    for (int i = min_i; i < max_i; ++i) {
       unsigned char prob = costmap_[it];
       unsigned char current;
 
       if (prob == costmap_2d::NO_INFORMATION) {
-        it++;
+        ++it;
         continue;
       } else if (prob > mark) {
         current = costmap_2d::LETHAL_OBSTACLE;
-        costmap_[it]--;
+        --costmap_[it];
       } else if (prob < clear) {
         current = costmap_2d::FREE_SPACE;
-        costmap_[it]++;
+        ++costmap_[it];
       } else {
         if (prob > (mark + clear) / 2) {
-          costmap_[it]--;
+          --costmap_[it];
         } else if (prob < (mark + clear) / 2) {
-          costmap_[it]++;
+          ++costmap_[it];
         } else {
           costmap_[it] = costmap_2d::NO_INFORMATION;
         }
-        it++;
+        ++it;
         continue;
       }
 
@@ -451,7 +451,7 @@ void RangeSensorLayer::updateCosts(costmap_2d::Costmap2D &master_grid,
 
       if (old_cost == NO_INFORMATION || old_cost < current)
         master_array[it] = current;
-      it++;
+      ++it;
     }
   }
 
