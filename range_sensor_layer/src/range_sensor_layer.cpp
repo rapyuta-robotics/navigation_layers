@@ -19,7 +19,7 @@ void RangeSensorLayer::onInitialize() {
 
     matchSize();
     min_x_ = min_y_ = std::numeric_limits<double>::max();
-    max_x_ = max_y_ = std::numeric_limits<double>::min();
+    max_x_ = max_y_ = std::numeric_limits<double>::lowest();
 
     // Default topic names list contains a single topic: /sonar
     // We use the XmlRpcValue constructor that takes a XML string and reading
@@ -362,7 +362,7 @@ void RangeSensorLayer::updateBounds(
     *max_y = std::max(*max_y, max_y_);
 
     min_x_ = min_y_ = std::numeric_limits<double>::max();
-    max_x_ = max_y_ = std::numeric_limits<double>::min();
+    max_x_ = max_y_ = std::numeric_limits<double>::lowest();
 
     if (!enabled_) {
         current_ = true;
